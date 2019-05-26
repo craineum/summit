@@ -10,6 +10,7 @@ class CompanyDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     name: Field::String,
+    users: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -22,8 +23,7 @@ class CompanyDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :name,
-    :created_at,
-    :updated_at,
+    :users,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -31,6 +31,7 @@ class CompanyDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
+    :users,
     :created_at,
     :updated_at,
   ].freeze
@@ -40,12 +41,13 @@ class CompanyDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
+    :users,
   ].freeze
 
   # Overwrite this method to customize how companies are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(company)
-  #   "Company ##{company.id}"
-  # end
+  def display_resource(company)
+    "#{company.name}"
+  end
 end

@@ -12,6 +12,7 @@ class UserDashboard < Administrate::BaseDashboard
     first_name: Field::String,
     last_name: Field::String,
     email: Field::String,
+    companies: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,9 +24,9 @@ class UserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :id,
-    :first_name,
     :last_name,
-    :email,
+    :first_name,
+    :companies,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,6 +36,7 @@ class UserDashboard < Administrate::BaseDashboard
     :first_name,
     :last_name,
     :email,
+    :companies,
     :created_at,
     :updated_at,
   ].freeze
@@ -46,12 +48,13 @@ class UserDashboard < Administrate::BaseDashboard
     :first_name,
     :last_name,
     :email,
+    :companies,
   ].freeze
 
   # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(user)
-  #   "User ##{user.id}"
-  # end
+  def display_resource(user)
+    "#{user.last_name}, #{user.first_name}"
+  end
 end
