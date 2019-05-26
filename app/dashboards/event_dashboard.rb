@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class CompanyDashboard < Administrate::BaseDashboard
+class EventDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -10,8 +10,8 @@ class CompanyDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     name: Field::String,
+    company: Field::BelongsTo,
     users: Field::HasMany,
-    events: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,8 +24,8 @@ class CompanyDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :name,
+    :company,
     :users,
-    :events,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -33,8 +33,8 @@ class CompanyDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
+    :company,
     :users,
-    :events,
     :created_at,
     :updated_at,
   ].freeze
@@ -44,13 +44,14 @@ class CompanyDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
+    :company,
     :users,
   ].freeze
 
-  # Overwrite this method to customize how companies are displayed
+  # Overwrite this method to customize how events are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(company)
-    "#{company.name}"
+  def display_resource(event)
+    "#{event.name}"
   end
 end
