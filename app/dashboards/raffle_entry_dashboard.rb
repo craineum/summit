@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class RaffleItemDashboard < Administrate::BaseDashboard
+class RaffleEntryDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -10,9 +10,8 @@ class RaffleItemDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     name: Field::String,
-    raffle_type: Field::Select.with_options(collection: RaffleItem.raffle_types.keys.to_a),
-    event: Field::BelongsTo,
-    raffle_entries: Field::HasMany,
+    email: Field::String,
+    raffle_item: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,9 +24,8 @@ class RaffleItemDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :name,
-    :raffle_type,
-    :event,
-    :raffle_entries,
+    :email,
+    :raffle_item,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,9 +33,8 @@ class RaffleItemDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
-    :raffle_type,
-    :event,
-    :raffle_entries,
+    :email,
+    :raffle_item,
     :created_at,
     :updated_at,
   ].freeze
@@ -47,15 +44,14 @@ class RaffleItemDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
-    :raffle_type,
-    :event,
-    :raffle_entries,
+    :email,
+    :raffle_item,
   ].freeze
 
-  # Overwrite this method to customize how raffle items are displayed
+  # Overwrite this method to customize how raffle entries are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(raffle_item)
-    "#{raffle_item.name}"
-  end
+  # def display_resource(raffle_entry)
+  #   "RaffleEntry ##{raffle_entry.id}"
+  # end
 end

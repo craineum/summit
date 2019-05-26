@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_26_161304) do
+ActiveRecord::Schema.define(version: 2019_05_26_164038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2019_05_26_161304) do
     t.index ["user_id"], name: "index_events_users_on_user_id"
   end
 
+  create_table "raffle_entries", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.bigint "raffle_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raffle_item_id"], name: "index_raffle_entries_on_raffle_item_id"
+  end
+
   create_table "raffle_items", force: :cascade do |t|
     t.string "name"
     t.integer "raffle_type"
@@ -69,5 +78,6 @@ ActiveRecord::Schema.define(version: 2019_05_26_161304) do
   add_foreign_key "events", "companies"
   add_foreign_key "events_users", "events"
   add_foreign_key "events_users", "users"
+  add_foreign_key "raffle_entries", "raffle_items"
   add_foreign_key "raffle_items", "events"
 end
