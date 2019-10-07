@@ -11,6 +11,9 @@ class EventDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     company: Field::BelongsTo,
+    start_at: Field::DateTime,
+    end_at: Field::DateTime,
+    attendees: Field::HasMany,
     users: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -25,6 +28,8 @@ class EventDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :company,
+    :start_at,
+    :attendees,
     :users,
   ].freeze
 
@@ -34,6 +39,9 @@ class EventDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :company,
+    :start_at,
+    :end_at,
+    :attendees,
     :users,
     :created_at,
     :updated_at,
@@ -45,6 +53,9 @@ class EventDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :company,
+    :start_at,
+    :end_at,
+    :attendees,
     :users,
   ].freeze
 

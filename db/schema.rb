@@ -10,10 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_26_164038) do
+ActiveRecord::Schema.define(version: 2019_09_15_112846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendees", force: :cascade do |t|
+    t.string "uuid"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "social_handle"
+    t.string "other"
+    t.bigint "company_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_attendees_on_company_id"
+    t.index ["uuid"], name: "index_attendees_on_uuid", unique: true
+  end
+
+  create_table "attendees_events", force: :cascade do |t|
+    t.bigint "attendee_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["attendee_id"], name: "index_attendees_events_on_attendee_id"
+    t.index ["event_id"], name: "index_attendees_events_on_event_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -35,6 +58,8 @@ ActiveRecord::Schema.define(version: 2019_05_26_164038) do
     t.bigint "company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_at"
+    t.datetime "end_at"
     t.index ["company_id"], name: "index_events_on_company_id"
   end
 
@@ -73,6 +98,9 @@ ActiveRecord::Schema.define(version: 2019_05_26_164038) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "attendees", "companies"
+  add_foreign_key "attendees_events", "attendees"
+  add_foreign_key "attendees_events", "events"
   add_foreign_key "companies_users", "companies"
   add_foreign_key "companies_users", "users"
   add_foreign_key "events", "companies"
